@@ -8,6 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 
+/**
+ * @description This component is used to display a list of tasks
+ */
 @Component({
   selector: 'hd-task1',
   standalone: true,
@@ -18,8 +21,16 @@ import {
 export default class Task1Component {
   #dataService = inject(DataService);
   #formBuilder = inject(FormBuilder);
+  /**
+   * @description The list of tasks
+   * @returns Observable<Todo[]>
+   */
   readonly todos$ = this.#dataService.getData();
 
+  /**
+   * @description The form used to add a new task
+   * @returns FormGroup
+   */
   todoForm = this.#formBuilder.group({
     text: new FormControl('', {
       nonNullable: true,
@@ -27,6 +38,10 @@ export default class Task1Component {
     }),
   });
 
+  /**
+   * @description Adds a new task to the list
+   * @returns void
+   */
   onSubmit() {
     if (this.todoForm.valid) {
       const todo: Partial<Todo> = {
@@ -39,6 +54,10 @@ export default class Task1Component {
     }
   }
 
+  /**
+   * @description Removes a task from the list
+   * @param taskId The id of the task to remove from the list
+   */
   onRemove(taskId: number) {
     this.#dataService.remove(taskId);
   }
