@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import Task2Component from './task2.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 describe('Task2Component', () => {
   let component: Task2Component;
@@ -15,7 +14,15 @@ describe('Task2Component', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should set mode to edit and todoId onEdit', () => {
+    const todoId = 123;
+    component.onEdit(todoId);
+    expect(component.mode).toEqual('edit');
+    expect(component.todoId).toEqual(todoId);
+  });
+
+  it('should set mode to add onAdd', () => {
+    component.onAdd(true);
+    expect(component.mode).toEqual('add');
   });
 });

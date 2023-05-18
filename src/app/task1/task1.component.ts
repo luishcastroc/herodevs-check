@@ -21,6 +21,7 @@ import {
 export default class Task1Component {
   #dataService = inject(DataService);
   #formBuilder = inject(FormBuilder);
+
   /**
    * @description The list of tasks
    * @returns Observable<Todo[]>
@@ -34,7 +35,7 @@ export default class Task1Component {
   todoForm = this.#formBuilder.group({
     text: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.minLength(3)],
+      validators: [Validators.minLength(3)],
     }),
   });
 

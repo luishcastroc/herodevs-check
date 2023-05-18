@@ -5,6 +5,7 @@ export type Todo = {
   id: number;
   text: string;
   completed: boolean;
+  category?: string;
 };
 
 @Injectable({
@@ -32,10 +33,23 @@ export class DataService {
     return this.#data.asObservable();
   }
 
+  public get(id: number): Observable<Todo | undefined> {
+    return of(this.#data.getValue().find((todo) => todo.id === id));
+  }
+
   public add(todo: Partial<Todo>): Observable<Todo> {
     const newTodo = { ...this.#defaultTodo, ...todo, id: this.#nextId++ };
     this.#data.next([...this.#data.value, newTodo]);
     return of(newTodo);
+  }
+
+  public update(id: number, todo: Partial<Todo>): Observable<Todo> {
+    const updatedTodo = { ...this.#defaultTodo, ...todo, id };
+    const todos = this.#data
+      .getValue()
+      .map((todo) => (todo.id === id ? updatedTodo : todo));
+    this.#data.next(todos);
+    return of(updatedTodo);
   }
 
   public remove(id: number): Observable<void> {

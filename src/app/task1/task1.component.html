@@ -1,18 +1,27 @@
 <div class="container">
-  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="todoForm"
+    (ngSubmit)="onSubmit()"
+    role="form"
+    aria-label="Todo Form"
+  >
     <div class="todo-input">
       <div>
-        <label for="todo">Todo:</label>
-        <input id="todo" type="text" formControlName="text" />
+        <label for="todo" id="todoLabel">Todo:</label>
+        <input
+          id="todo"
+          type="text"
+          formControlName="text"
+          aria-labelledby="todoLabel"
+          aria-required="true"
+        />
         <div
           *ngIf="
             todoForm.controls.text.invalid &&
             (todoForm.controls.text.dirty || todoForm.controls.text.touched)
           "
+          role="alert"
         >
-          <small *ngIf="todoForm.controls.text.errors?.['required']"
-            >Todo is required.</small
-          >
           <small *ngIf="todoForm.controls.text.errors?.['minlength']"
             >Todo must be at least 3 characters long.</small
           >
@@ -22,17 +31,26 @@
         class="add"
         type="submit"
         [disabled]="todoForm.controls.text.invalid"
+        [attr.aria-disabled]="todoForm.controls.text.invalid ? true : null"
       >
         Add Todo
       </button>
     </div>
   </form>
 
-  <ul>
+  <ul role="list" aria-label="Todo list">
     <li *ngFor="let todo of todos$ | async">
       <div class="todo-list">
-        <span>{{ todo.text }}</span>
-        <button class="delete" (click)="onRemove(todo.id)">X</button>
+        <!-- Specify the text is a 'Todo item' for screen readers -->
+        <span role="listitem" aria-label="Todo item">{{ todo.text }}</span>
+        <!-- Add aria-label to describe the action -->
+        <button
+          class="delete"
+          (click)="onRemove(todo.id)"
+          aria-label="Delete this todo"
+        >
+          X
+        </button>
       </div>
     </li>
   </ul>
