@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.todo-input {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+form {
+  padding: 10px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+input {
+  height: 35px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
+
+  &.ng-invalid:not(.ng-untouched) {
+    border: 1px solid red;
+  }
+}
+
+small {
+  color: red;
+  margin-left: 10px;
+}
+
+button {
+  &.add {
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    height: 35px;
+    width: 80px;
+  }
+
+  &.delete {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    height: 35px;
+    width: 40px;
+  }
+}

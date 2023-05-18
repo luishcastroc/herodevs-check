@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './task3.component.html',
-  styleUrls: ['./task3.component.scss']
+  styleUrls: ['./task3.component.scss'],
 })
-export class Task3Component {
-
-}
+export default class Task3Component {}

@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+/* HTML and Body default styles */
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 100%;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+hd-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+
+  router-outlet {
+    + * {
+      position: relative;
+      display: flex;
+      flex: 1 1 auto;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+//style nav to be a toolbar at the top of the page
+$primary-color: #3f51b5;
+$secondary-color: white;
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-color;
+  color: $secondary-color;
+  padding: 0 20px;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+
+    li {
+      display: flex;
+      padding: 10px;
+      background-color: $secondary-color;
+      border-radius: 5px;
+      margin: 0 5px;
+
+      a {
+        display: flex;
+        padding: 10px;
+        background-color: $secondary-color;
+        border-radius: 5px;
+        margin: 0 5px;
+        color: $primary-color;
+        text-decoration: none;
+
+        &.active {
+          background-color: $primary-color;
+          color: $secondary-color;
+        }
+
+        &:hover {
+          background-color: $primary-color;
+          color: $secondary-color;
+        }
+      }
+    }
+  }
+}

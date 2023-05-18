@@ -1,1 +1,37 @@
-<p>task1 works!</p>
+<div class="container">
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+    <div class="todo-input">
+      <div>
+        <label for="todo">Todo:</label>
+        <input id="todo" type="text" formControlName="text" />
+        <div
+          *ngIf="
+            todoForm.controls.text.invalid &&
+            (todoForm.controls.text.dirty || todoForm.controls.text.touched)
+          "
+        >
+          <small *ngIf="todoForm.controls.text.errors?.['required']"
+            >Todo is required.</small
+          >
+          <small *ngIf="todoForm.controls.text.errors?.['minlength']"
+            >Todo must be at least 3 characters long.</small
+          >
+        </div>
+      </div>
+      <button
+        class="add"
+        type="submit"
+        [disabled]="todoForm.controls.text.invalid"
+      >
+        Add Todo
+      </button>
+    </div>
+  </form>
+
+  <ul>
+    <li *ngFor="let todo of todos$ | async">
+      {{ todo.text }}
+      <button class="delete" (click)="onRemove(todo.id)">X</button>
+    </li>
+  </ul>
+</div>

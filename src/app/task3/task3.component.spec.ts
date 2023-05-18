@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Task3Component } from './task3.component';
+import Task3Component from './task3.component';
 
 describe('Task3Component', () => {
   let component: Task3Component;
@@ -8,7 +8,7 @@ describe('Task3Component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [Task3Component]
+      imports: [Task3Component],
     });
     fixture = TestBed.createComponent(Task3Component);
     component = fixture.componentInstance;

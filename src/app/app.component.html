@@ -1,5 +1,48 @@
-<nav>
+<nav aria-label="Main Navigation">
   <!-- Navigation Links -->
+  <ul>
+    <li>
+      <a
+        routerLink="/task1"
+        routerLinkActive="active"
+        aria-label="Navigate to Task 1"
+        >Task 1</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/task2"
+        routerLinkActive="active"
+        aria-label="Navigate to Task 2"
+        >Task 2</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/task3"
+        routerLinkActive="active"
+        aria-label="Navigate to Task 3"
+        >Task 3</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/task4"
+        routerLinkActive="active"
+        aria-label="Navigate to Task 4"
+        >Task 4</a
+      >
+    </li>
+    <li>
+      <a
+        routerLink="/task5"
+        routerLinkActive="active"
+        aria-label="Navigate to Task 5"
+        >Task 5</a
+      >
+    </li>
+  </ul>
 </nav>
 <br />
 <!-- Route Specific Content -->
+<router-outlet aria-label="Page Content"></router-outlet>
