@@ -67,8 +67,10 @@
       <button
         class="save"
         type="submit"
-        [disabled]="todoEditForm.invalid"
-        [attr.aria-disabled]="todoEditForm.invalid ? true : null"
+        [disabled]="todoEditForm.invalid || todoEditForm.pristine"
+        [attr.aria-disabled]="
+          todoEditForm.invalid || todoEditForm.pristine ? true : null
+        "
       >
         Save
       </button>

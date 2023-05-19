@@ -1,8 +1,8 @@
 import Task2Component from '../task2/task2.component';
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { DataService, Todo } from '../data.service';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { Todo } from '../data.service';
 import { TodoEditComponent } from '../todo-edit/todo-edit.component';
 
 @Component({
@@ -13,17 +13,15 @@ import { TodoEditComponent } from '../todo-edit/todo-edit.component';
   styleUrls: ['./task5.component.scss'],
 })
 export default class Task5Component extends Task2Component implements OnInit {
-  #dataService = inject(DataService);
-  #formBuilder = inject(FormBuilder);
-  readonly categories$ = this.#dataService.getCategories();
-  selectedCategory = this.#formBuilder.control('', {
+  readonly categories$ = this.dataService.getCategories();
+  selectedCategory = this.formBuilder.control('', {
     nonNullable: true,
   });
 
   ngOnInit(): void {
     this.todoForm.addControl(
       'category',
-      this.#formBuilder.control('', {
+      this.formBuilder.control('', {
         nonNullable: true,
         validators: [Validators.required],
       })
@@ -46,7 +44,7 @@ export default class Task5Component extends Task2Component implements OnInit {
         category: this.todoForm.get('category')?.value,
       };
 
-      this.#dataService.add(todo).subscribe(() => {
+      this.dataService.add(todo).subscribe(() => {
         this.todoForm.reset();
       });
     }

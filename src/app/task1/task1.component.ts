@@ -24,21 +24,21 @@ export interface TodoForm {
   styleUrls: ['./task1.component.scss'],
 })
 export default class Task1Component {
-  #dataService = inject(DataService);
-  #formBuilder = inject(FormBuilder);
+  protected dataService = inject(DataService);
+  protected formBuilder = inject(FormBuilder);
 
   /**
    * @description The list of tasks
    * @returns Observable<Todo[]>
    */
-  readonly todos$ = this.#dataService.getData();
+  readonly todos$ = this.dataService.getData();
 
   /**
    * @description The form used to add a new task
    * @returns FormGroup
    */
-  todoForm = this.#formBuilder.group<TodoForm>({
-    text: this.#formBuilder.control('', {
+  todoForm = this.formBuilder.group<TodoForm>({
+    text: this.formBuilder.control('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(3)],
     }),
@@ -54,7 +54,7 @@ export default class Task1Component {
         text: this.todoForm.controls.text.value,
         completed: false,
       };
-      this.#dataService.add(todo).subscribe(() => {
+      this.dataService.add(todo).subscribe(() => {
         this.todoForm.reset();
       });
     }
@@ -65,6 +65,6 @@ export default class Task1Component {
    * @param taskId The id of the task to remove from the list
    */
   onRemove(taskId: number) {
-    this.#dataService.remove(taskId);
+    this.dataService.remove(taskId);
   }
 }
