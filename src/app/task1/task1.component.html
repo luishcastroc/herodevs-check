@@ -17,11 +17,15 @@
         />
         <div
           *ngIf="
+            !todoForm.controls.text.pristine &&
             todoForm.controls.text.invalid &&
             (todoForm.controls.text.dirty || todoForm.controls.text.touched)
           "
           role="alert"
         >
+          <small *ngIf="todoForm.controls.text.errors?.['required']"
+            >Todo text is required.</small
+          >
           <small *ngIf="todoForm.controls.text.errors?.['minlength']"
             >Todo must be at least 3 characters long.</small
           >

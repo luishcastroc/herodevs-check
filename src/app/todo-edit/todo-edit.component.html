@@ -1,6 +1,6 @@
 <div class="container">
   <form
-    [formGroup]="todoForm"
+    [formGroup]="todoEditForm"
     (ngSubmit)="onSubmit()"
     role="form"
     aria-label="Todo Form"
@@ -18,22 +18,20 @@
         />
         <div
           *ngIf="
-            !todoForm.controls.text.pristine &&
-            todoForm.controls.text.invalid &&
-            (todoForm.controls.text.dirty || todoForm.controls.text.touched)
+            !todoEditForm.controls.text.pristine &&
+            todoEditForm.controls.text.invalid &&
+            (todoEditForm.controls.text.dirty ||
+              todoEditForm.controls.text.touched)
           "
           role="alert"
         >
-          <small *ngIf="todoForm.controls.text.errors?.['required']"
-            >Todo text is required.</small
-          >
-          <small *ngIf="todoForm.controls.text.errors?.['minlength']"
+          <small *ngIf="todoEditForm.controls.text.errors?.['minlength']"
             >Todo must be at least 3 characters long.</small
           >
         </div>
       </div>
       <!-- Category -->
-      <div class="category-container">
+      <div class="category-container" *ngIf="includeCategory">
         <select
           [formControl]="selectedCategory"
           class="category"
@@ -54,41 +52,29 @@
         />
         <div
           *ngIf="
-            !todoForm.controls.category?.pristine &&
-            todoForm.controls.category?.invalid &&
-            (todoForm.controls.category?.dirty ||
-              todoForm.controls.category?.touched)
+            !todoEditForm.controls.category?.pristine &&
+            todoEditForm.controls.category?.invalid &&
+            (todoEditForm.controls.category?.dirty ||
+              todoEditForm.controls.category?.touched)
           "
           role="alert"
         >
-          <small *ngIf="todoForm.controls.category?.errors?.['required']"
+          <small *ngIf="todoEditForm.controls.category?.errors?.['required']"
             >Todo category is required.</small
           >
         </div>
       </div>
       <button
-        class="add"
+        class="save"
         type="submit"
-        [disabled]="todoForm.invalid"
-        [attr.aria-disabled]="todoForm.invalid ? true : null"
+        [disabled]="todoEditForm.invalid"
+        [attr.aria-disabled]="todoEditForm.invalid ? true : null"
       >
-        Add Todo
+        Save
+      </button>
+      <button (click)="goToAdd.emit(true)" class="cancel" type="button">
+        Cancel
       </button>
     </div>
   </form>
-
-  <ul role="list" aria-label="Todo list">
-    <li *ngFor="let todo of todos$ | async">
-      <div class="todo-list">
-        <span role="listitem" aria-label="Todo item">{{ todo.text }}</span>
-        <button
-          class="delete"
-          (click)="onRemove(todo.id)"
-          aria-label="Delete this todo"
-        >
-          X
-        </button>
-      </div>
-    </li>
-  </ul>
 </div>

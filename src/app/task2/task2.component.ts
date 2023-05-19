@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Task1Component from '../task1/task1.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TodoEditComponent } from './todo-edit/todo-edit.component';
+import { TodoEditComponent } from '../todo-edit/todo-edit.component';
+import { Mode } from '../models';
 
 @Component({
   selector: 'hd-task2',
@@ -15,12 +16,8 @@ export default class Task2Component extends Task1Component {
   /**
    * @description The mode of the component
    */
-  mode: 'edit' | 'add' = 'add';
+  mode: Mode = 'add';
   todoId!: number;
-
-  constructor() {
-    super();
-  }
 
   /**
    *

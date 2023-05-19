@@ -14,11 +14,14 @@ export type Todo = {
 export class DataService {
   #initialData: Todo[] = [];
   #data = new BehaviorSubject<Todo[]>([]);
+  #categories = new BehaviorSubject<string[]>([]);
   #nextId = 1;
+  readonly #defaultCategory = 'general';
   readonly #defaultTodo: Todo = {
     id: -1,
     text: '',
     completed: false,
+    category: this.#defaultCategory,
   };
 
   constructor() {
@@ -38,7 +41,14 @@ export class DataService {
   }
 
   public add(todo: Partial<Todo>): Observable<Todo> {
+    if (!todo.category) {
+      todo.category = this.#defaultCategory;
+    }
     const newTodo = { ...this.#defaultTodo, ...todo, id: this.#nextId++ };
+    const categoryExists = this.#categories.getValue().includes(todo.category!);
+    if (!categoryExists) {
+      this.addCategory(todo.category!);
+    }
     this.#data.next([...this.#data.value, newTodo]);
     return of(newTodo);
   }
@@ -48,6 +58,10 @@ export class DataService {
     const todos = this.#data
       .getValue()
       .map((todo) => (todo.id === id ? updatedTodo : todo));
+    const categoryExists = this.#categories.getValue().includes(todo.category!);
+    if (!categoryExists) {
+      this.addCategory(todo.category!);
+    }
     this.#data.next(todos);
     return of(updatedTodo);
   }
@@ -55,6 +69,15 @@ export class DataService {
   public remove(id: number): Observable<void> {
     this.#data.next(this.#data.value.filter((t) => t.id !== id));
     return of();
+  }
+
+  public getCategories(): Observable<string[]> {
+    return this.#categories.asObservable();
+  }
+
+  public addCategory(category: string): Observable<string> {
+    this.#categories.next([...this.#categories.getValue(), category]);
+    return of(category);
   }
 
   private initialize() {

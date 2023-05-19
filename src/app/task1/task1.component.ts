@@ -8,6 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 
+export interface TodoForm {
+  text: FormControl<string>;
+  category?: FormControl<string>;
+}
+
 /**
  * @description This component is used to display a list of tasks
  */
@@ -32,10 +37,10 @@ export default class Task1Component {
    * @description The form used to add a new task
    * @returns FormGroup
    */
-  todoForm = this.#formBuilder.group({
-    text: new FormControl('', {
+  todoForm = this.#formBuilder.group<TodoForm>({
+    text: this.#formBuilder.control('', {
       nonNullable: true,
-      validators: [Validators.minLength(3)],
+      validators: [Validators.required, Validators.minLength(3)],
     }),
   });
 
