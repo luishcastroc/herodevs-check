@@ -37,18 +37,19 @@
           class="category"
           (change)="selectCategory()"
         >
+          <option value="">Select a category...</option>
+          <option value="add-new">Add new</option>
           <option
             *ngFor="let category of categories$ | async"
             [value]="category"
           >
             {{ category }}
           </option>
-          <option value="">Add new</option>
         </select>
         <input
           formControlName="category"
           placeholder="New category"
-          *ngIf="!this.selectedCategory.value"
+          *ngIf="this.selectedCategory.value === 'add-new'"
         />
         <div
           *ngIf="
@@ -72,7 +73,7 @@
           todoEditForm.invalid || todoEditForm.pristine ? true : null
         "
       >
-        Save
+        Update
       </button>
       <button (click)="goToAdd.emit(true)" class="cancel" type="button">
         Cancel

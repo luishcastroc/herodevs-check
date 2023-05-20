@@ -14,9 +14,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { DataService } from 'src/app/data.service';
+import { DataService, Todo } from 'src/app/data.service';
 import { Subject, takeUntil } from 'rxjs';
-import { TodoForm } from '../task1/task1.component';
+import { TodoForm } from '../../task1/task1.component';
 
 @Component({
   selector: 'hd-todo-edit',
@@ -92,7 +92,10 @@ export class TodoEditComponent implements OnInit, OnDestroy {
    * @description sets the value of the category form control
    */
   selectCategory() {
-    if (this.selectedCategory.value) {
+    if (
+      this.selectedCategory.value &&
+      this.selectedCategory.value !== 'add-new'
+    ) {
       this.todoEditForm.controls.category?.setValue(
         this.selectedCategory.value
       );
@@ -105,8 +108,16 @@ export class TodoEditComponent implements OnInit, OnDestroy {
    * @description when submitting the form, it calls the update method of the dataService
    */
   onSubmit() {
+    const todo: Partial<Todo> = {
+      text: this.todoEditForm.get('text')?.value,
+      completed: false,
+      category:
+        this.todoEditForm.get('category')?.value ??
+        this.#dataService.getdefaultCategory(),
+    };
+
     this.#dataService
-      .update(this.todoId, this.todoEditForm.value)
+      .update(this.todoId, todo)
       .pipe(takeUntil(this.#destroy))
       .subscribe(() => {
         this.goToAdd.emit(true);

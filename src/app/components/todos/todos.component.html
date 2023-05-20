@@ -1,0 +1,82 @@
+<form
+  [formGroup]="todoForm"
+  (ngSubmit)="onSubmit()"
+  role="form"
+  aria-label="Todo Form"
+>
+  <div class="todo-input">
+    <div>
+      <label for="todo" id="todoLabel">Todo:</label>
+      <input
+        id="todo"
+        type="text"
+        formControlName="text"
+        aria-labelledby="todoLabel"
+        aria-required="true"
+      />
+      <div
+        *ngIf="
+          !todoForm.controls.text.pristine &&
+          todoForm.controls.text.invalid &&
+          (todoForm.controls.text.dirty || todoForm.controls.text.touched)
+        "
+        role="alert"
+      >
+        <small *ngIf="todoForm.controls.text.errors?.['required']"
+          >Todo text is required.</small
+        >
+        <small *ngIf="todoForm.controls.text.errors?.['minlength']"
+          >Todo must be at least 3 characters long.</small
+        >
+      </div>
+    </div>
+    <!-- Category -->
+    <div class="category-container" *ngIf="withCategory">
+      <select
+        [formControl]="selectedCategory"
+        class="category"
+        (change)="selectCategory()"
+      >
+        <option value="">Select a category...</option>
+        <option value="add-new">Add new</option>
+        <option *ngFor="let category of categories$ | async" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+      <input
+        formControlName="category"
+        placeholder="New category"
+        *ngIf="this.selectedCategory.value === 'add-new'"
+      />
+      <div
+        *ngIf="
+          !todoForm.controls.category?.pristine &&
+          todoForm.controls.category?.invalid &&
+          (todoForm.controls.category?.dirty ||
+            todoForm.controls.category?.touched)
+        "
+        role="alert"
+      >
+        <small *ngIf="todoForm.controls.category?.errors?.['required']"
+          >Todo category is required.</small
+        >
+      </div>
+    </div>
+    <button
+      class="add"
+      type="submit"
+      [disabled]="
+        (withCategory && todoForm.invalid) ||
+        (!withCategory && todoForm.controls.text.invalid)
+      "
+      [attr.aria-disabled]="
+        (withCategory && todoForm.invalid) ||
+        (!withCategory && todoForm.controls.text.invalid)
+          ? true
+          : null
+      "
+    >
+      Add Todo
+    </button>
+  </div>
+</form>

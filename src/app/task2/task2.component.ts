@@ -1,18 +1,34 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import Task1Component from '../task1/task1.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { TodoEditComponent } from '../todo-edit/todo-edit.component';
+import { Component, inject } from '@angular/core';
 import { Mode } from '../models';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+  TodoEditComponent,
+  TodosComponent,
+  TodosListComponent,
+} from '../components';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'hd-task2',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TodoEditComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TodosComponent,
+    TodosListComponent,
+    TodoEditComponent,
+  ],
   templateUrl: './task2.component.html',
   styleUrls: ['./task2.component.scss'],
 })
-export default class Task2Component extends Task1Component {
+export default class Task2Component {
+  /**
+   * @description The list of tasks
+   * @returns Observable<Todo[]>
+   */
+  protected todos$ = inject(DataService).getData();
+
   /**
    * @description The mode of the component
    */

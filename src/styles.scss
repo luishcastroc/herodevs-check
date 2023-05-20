@@ -53,6 +53,9 @@ select {
   border-radius: 5px;
   border: 1px solid #ccc;
   padding: 0 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 
   &.ng-invalid:not(.ng-pristine):not(.ng-untouched) {
     border: 1px solid red;
@@ -151,4 +154,11 @@ ul {
     max-width: 40rem;
     overflow-wrap: break-word;
   }
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
 }

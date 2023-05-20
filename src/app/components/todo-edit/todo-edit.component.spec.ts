@@ -45,10 +45,40 @@ describe('TodoEditComponent', () => {
     component.todoEditForm.get('text')?.setValue('Updated todo');
     component.onSubmit();
 
-    expect(dataService.update).toHaveBeenCalledWith(
-      component.todoId,
-      component.todoEditForm.value
-    );
+    expect(dataService.update).toHaveBeenCalledWith(component.todoId, {
+      text: component.todoEditForm.controls.text.value,
+      completed: false,
+      category: 'general',
+    });
     expect(component.goToAdd.emit).toHaveBeenCalledWith(true);
+  });
+
+  it('should add category control to the form if includeCategory is true', () => {
+    component.includeCategory = true;
+    component.ngOnInit();
+    expect(component.todoEditForm.contains('category')).toBeTrue();
+  });
+
+  it('should not add category control to the form if includeCategory is false', () => {
+    component.includeCategory = false;
+    component.ngOnInit();
+    expect(component.todoEditForm.contains('category')).toBeFalse();
+  });
+
+  it('should set category when category is selected', () => {
+    component.includeCategory = true;
+    component.ngOnInit();
+    const category = 'testCategory';
+    component.selectedCategory.setValue(category);
+    component.selectCategory();
+    expect(component.todoEditForm.controls.category?.value).toEqual(category);
+  });
+
+  it('should reset category when "add-new" is selected', () => {
+    component.includeCategory = true;
+    component.ngOnInit();
+    component.selectedCategory.setValue('add-new');
+    component.selectCategory();
+    expect(component.todoEditForm.controls.category?.value).toEqual('');
   });
 });
