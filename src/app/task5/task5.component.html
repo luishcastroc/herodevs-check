@@ -5,7 +5,9 @@
       [todos]="todos$ | async"
       [withEdit]="true"
       [withConfirmDelete]="true"
+      [withFilter]="true"
       (edit)="onEdit($event)"
+      (filter)="onFilter($event)"
     />
   </ng-container>
   <ng-template #editTodo>
