@@ -22,6 +22,7 @@ export class TodosListComponent {
   @Input() withEdit = false;
   @Input() withConfirmDelete = false;
   @Input() withFilter = false;
+  @Input() withCategory = false;
   @Output() edit = new EventEmitter<number>();
   @Output() filter = new EventEmitter<string>();
   _todos: Todo[] = [];

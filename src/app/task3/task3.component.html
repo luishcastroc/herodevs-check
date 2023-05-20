@@ -4,6 +4,7 @@
     <hd-todos-list
       [todos]="todos$ | async"
       [withEdit]="true"
+      [withCategory]="true"
       (edit)="onEdit($event)"
     />
   </ng-container>

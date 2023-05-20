@@ -1,38 +1,56 @@
-<ul role="list" aria-label="Todo list">
-  <ng-container *ngIf="withFilter && _todos.length > 0">
-    <label for="categories" id="categoriesLabel">Filter by Category:</label>
-    <select
-      id="categories"
-      [formControl]="filterSelect"
-      class="category"
-      (change)="changeFilter()"
-    >
-      <option value="all">All</option>
-      <option *ngFor="let category of categories$ | async" [value]="category">
-        {{ category }}
-      </option>
-    </select>
+<ng-container *ngIf="withFilter && _todos.length > 0">
+  <label for="categories" id="categoriesLabel">Filter by Category:</label>
+  <select
+    id="categories"
+    [formControl]="filterSelect"
+    class="category"
+    (change)="changeFilter()"
+  >
+    <option value="all">All</option>
+    <option *ngFor="let category of categories$ | async" [value]="category">
+      {{ category }}
+    </option>
+  </select>
+</ng-container>
+<ul role="list" aria-label="Todo list" class="todo-list">
+  <ng-container *ngIf="_todos.length > 0">
+    <div class="header">
+      <span role="heading" aria-label="Todo header">Todo Content</span>
+      <span *ngIf="withCategory" role="heading" aria-label="Category header"
+        >Category</span
+      >
+      <span role="heading" aria-label="Actions header" class="actions-header"
+        >Actions</span
+      >
+    </div>
   </ng-container>
-  <li *ngFor="let todo of _todos">
-    <div class="todo-list">
-      <span role="listitem" aria-label="Todo item">{{ todo.text }}</span>
-      <div class="actions">
-        <button
-          *ngIf="withEdit"
-          class="edit"
-          (click)="edit.emit(todo.id)"
-          aria-label="Edit this todo"
-        >
-          Edit
-        </button>
-        <button
-          class="delete"
-          (click)="onRemove(todo.id)"
-          aria-label="Delete this todo"
-        >
-          X
-        </button>
-      </div>
+  <li *ngFor="let todo of _todos" class="todo-list-table">
+    <span role="listitem" aria-label="Todo item" class="list-item">{{
+      todo.text
+    }}</span>
+    <span
+      *ngIf="withCategory"
+      role="listitem"
+      aria-label="Category item"
+      class="list-item"
+      >{{ todo.category }}</span
+    >
+    <div class="actions">
+      <button
+        *ngIf="withEdit"
+        class="edit"
+        (click)="edit.emit(todo.id)"
+        aria-label="Edit this todo"
+      >
+        Edit
+      </button>
+      <button
+        class="delete"
+        (click)="onRemove(todo.id)"
+        aria-label="Delete this todo"
+      >
+        X
+      </button>
     </div>
   </li>
 </ul>
